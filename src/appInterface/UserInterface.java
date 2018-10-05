@@ -401,6 +401,7 @@ public class UserInterface{
 				String cbGrade = (String) comboBoxRegisterStudentToCourseGrade.getSelectedItem();
 				lblRegisterStudentToCourseMessage.setForeground(Color.BLACK);
 				int selectedRow = tableManageStudents.getSelectedRow();
+				System.out.println(cbState);
 
 				if (ssn.isEmpty() || courseCode.isEmpty()) {
 					lblRegisterStudentToCourseMessage.setForeground(Color.RED);
@@ -408,8 +409,6 @@ public class UserInterface{
 				} else {
 					try {
 						if ((selectedRow >= 0) && cbState.equals(cbNewCourse)) {
-							int row = tableManageStudents.getSelectedRow();
-							//String courseCodeValue = (String) tableManageStudents.getValueAt(row, 0);
 							Controller.registerNewStudent(ssn, courseCode.toUpperCase());
 							lblRegisterStudentToCourseMessage.setText("Student is now registered on the course");
 						}
@@ -418,8 +417,6 @@ public class UserInterface{
 								lblRegisterStudentToCourseMessage.setForeground(Color.RED);
 								lblRegisterStudentToCourseMessage.setText("Grade must be selected");
 							} else {
-								int row = tableManageStudents.getSelectedRow();
-								String cCodeValue = (String) tableManageStudents.getValueAt(row, 0);
 								Controller.registerOldStudentDal(ssn, courseCode, cbGrade);
 								lblRegisterStudentToCourseMessage.setText("Final grade registered");
 							}
@@ -490,13 +487,13 @@ public class UserInterface{
 		JButton btnSearchShowResultsForCourse = new JButton("Show results for course");
 		btnSearchShowResultsForCourse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				String ssn = txtSearchStudentSsn.getText();
 				String courseCode = txtSearchCourseCode.getText();
 				dataModelCourseInformation.setRowCount(0);
 				lblSearchMessage.setText(null);
 				lblSearchMessage.setForeground(Color.BLACK);
 				try {
-					if (courseCode.isEmpty()) {
+					if (courseCode.isEmpty() || ssn.isEmpty()) {
 						lblSearchMessage.setForeground(Color.RED);
 						lblSearchMessage.setText("Course code must be entered to fetch information");
 					} else {
@@ -511,6 +508,7 @@ public class UserInterface{
 								String studentName = Controller.findStudentDal(s.getStudentSSN()).getStudentName();
 								String courseName = Controller.findCourseDal(s.getCourseID()).getCourseName();
 								dataModelCourseInformation.addRow(new Object[] { s.getStudentSSN(), studentName, courseName, s.getGrade() });
+								lblSearchMessage.setText("test");
 							}
 						}
 					}
