@@ -457,6 +457,9 @@ public class UserInterface{
 		masterTabPane_1.addTab("Search", null, search, null);
 		search.setLayout(null);
 		
+		dataModelCourseInformation = new DefaultTableModel();
+
+		
 		JLabel lblSearchCourseCode = new JLabel("Course code:");
 		lblSearchCourseCode.setBounds(20, 15, 76, 16);
 		search.add(lblSearchCourseCode);
@@ -475,7 +478,7 @@ public class UserInterface{
 		txtSearchStudentSsn.setBounds(120, 42, 183, 22);
 		search.add(txtSearchStudentSsn);
 		
-		table = new JTable();
+		table = new JTable(dataModelCourseInformation);
 		table.setModel(new DefaultTableModel());
 		table.setBounds(364, 15, 833, 563);
 		search.add(table);
